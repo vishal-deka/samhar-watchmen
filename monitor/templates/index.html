@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	</head>
+	<body>
+	<h1>WatchMen Monitoring UI</h1>
+		<div id="main">
+			<p>The following information will be automatically updated every 5 seconds</p>
+			<p id="time">Current time: </p>
+		</div>
+	
+	</body>
+	<script>
+	
+	function getHTML(row){
+	
+		var str = 'Camera ID: ' + row["id"];
+		str += ' Location: ' + row["lat"] + ', ' + row["lot"];
+		str += ' Time Updated: ' + row["timestamp"]
+		str += ' People count: ' + row["count"]
+		return str;
+	}
+	
+	const interval = setInterval(function() {
+		
+		document.getElementById("time").innerHTML = new Date();
+		data = []
+			axios.get('/fetch')
+				.then( (res) =>{
+				data = res.data
+			
+			data.forEach(function(row) {
+			var div = document.createElement("div");
+			div.className = "finalBlock";
+			div.innerHTML = getHTML(row)
+			document.body.appendChild(div);
+			});
+		})
+	
+	}, 3000);
+	</script>
+</html>
