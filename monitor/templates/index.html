@@ -6,6 +6,7 @@
 	<h1>WatchMen Monitoring UI</h1>
 		<div id="main">
 			<p>The following information will be automatically updated every 5 seconds</p>
+			<p>Current time: </p>
 			<p id="time">Current time: </p>
 		</div>
 	
@@ -22,7 +23,8 @@
 	}
 	
 	const interval = setInterval(function() {
-		
+		const m = document.getElementById("main")
+		m.innerHTML = '';
 		document.getElementById("time").innerHTML = new Date();
 		data = []
 			axios.get('/fetch')
@@ -33,7 +35,7 @@
 			var div = document.createElement("div");
 			div.className = "finalBlock";
 			div.innerHTML = getHTML(row)
-			document.body.appendChild(div);
+			m.appendChild(div);
 			});
 		})
 	
